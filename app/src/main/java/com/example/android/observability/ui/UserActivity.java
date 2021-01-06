@@ -79,6 +79,7 @@ public class UserActivity extends AppCompatActivity {
 
     /**
      * https://ericliu001.github.io/.well-known/assetlinks.json
+     * https://ericliu001.github.io/user/mikesmith
      */
     private void handleIntent() {
         // ATTENTION: This is to handle app links.
