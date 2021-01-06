@@ -24,16 +24,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import com.example.android.observability.Injection;
 import com.example.android.persistence.R;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-
 
 /**
  * Main screen of the app. Displays a user name and gives the option to update the user name.
@@ -65,11 +63,30 @@ public class UserActivity extends AppCompatActivity {
 
         mViewModelFactory = Injection.provideViewModelFactory(this);
         mViewModel = new ViewModelProvider(this, mViewModelFactory).get(UserViewModel.class);
-        mUpdateButton.setOnClickListener(v -> updateUserName());
-        // ATTENTION: This was auto-generated to handle app links.
+        mUpdateButton.setOnClickListener(v -> {
+            String userName = mUserNameInput.getText().toString();
+            updateUserName(userName);
+        });
+        handleIntent();
+    }
+
+    @Override
+    protected void onNewIntent(final Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        handleIntent();
+    }
+
+    private void handleIntent() {
+        // ATTENTION: This is to handle app links.
         Intent appLinkIntent = getIntent();
         String appLinkAction = appLinkIntent.getAction();
         Uri appLinkData = appLinkIntent.getData();
+
+        if (appLinkData != null) {
+            String userName = appLinkData.getLastPathSegment();
+            updateUserName(userName);
+        }
     }
 
     @Override
@@ -93,8 +110,7 @@ public class UserActivity extends AppCompatActivity {
         mDisposable.clear();
     }
 
-    private void updateUserName() {
-        String userName = mUserNameInput.getText().toString();
+    private void updateUserName(String userName) {
         // Disable the update button until the user name update has been done
         mUpdateButton.setEnabled(false);
         // Subscribe to updating the user name.
