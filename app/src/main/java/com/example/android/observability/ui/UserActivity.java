@@ -16,6 +16,8 @@
 
 package com.example.android.observability.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -64,6 +66,10 @@ public class UserActivity extends AppCompatActivity {
         mViewModelFactory = Injection.provideViewModelFactory(this);
         mViewModel = new ViewModelProvider(this, mViewModelFactory).get(UserViewModel.class);
         mUpdateButton.setOnClickListener(v -> updateUserName());
+        // ATTENTION: This was auto-generated to handle app links.
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
     }
 
     @Override
