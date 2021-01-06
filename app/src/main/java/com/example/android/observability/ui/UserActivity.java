@@ -77,6 +77,9 @@ public class UserActivity extends AppCompatActivity {
         handleIntent();
     }
 
+    /**
+     * https://ericliu001.github.io/.well-known/assetlinks.json
+     */
     private void handleIntent() {
         // ATTENTION: This is to handle app links.
         Intent appLinkIntent = getIntent();
